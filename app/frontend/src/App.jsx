@@ -14,6 +14,7 @@ import CompanyDetail from "@/pages/CompanyDetail";
 import Deals from "@/pages/Deals";
 import Invoices from "@/pages/Invoices";
 import InvoiceDetail from "@/pages/InvoiceDetail";
+import Products from "@/pages/Products";
 import Tasks from "@/pages/Tasks";
 import Settings from "@/pages/Settings";
 
@@ -54,6 +55,7 @@ export default function App() {
           <Route path="/deals/:slug" element={<Deals />} />
           <Route path="/invoices" element={<Invoices />} />
           <Route path="/invoices/:id" element={<InvoiceDetail />} />
+          <Route path="/products" element={<Products />} />
           <Route path="/tasks" element={<Tasks />} />
           <Route path="/settings" element={<Settings />} />
           <Route path="/login" element={<Navigate to="/" replace />} />

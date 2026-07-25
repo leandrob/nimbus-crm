@@ -6,6 +6,7 @@ import {
   Building2,
   Briefcase,
   FileText,
+  Package,
   CheckSquare,
   Settings,
   Menu,
@@ -33,6 +34,7 @@ const NAV = [
   { to: '/companies', label: 'Companies', icon: Building2 },
   { to: '/deals', label: 'Deals', icon: Briefcase },
   { to: '/invoices', label: 'Invoices', icon: FileText },
+  { to: '/products', label: 'Products', icon: Package },
   { to: '/tasks', label: 'Tasks', icon: CheckSquare },
   { to: '/settings', label: 'Settings', icon: Settings },
 ];

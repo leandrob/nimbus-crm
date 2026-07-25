@@ -11,11 +11,14 @@ export function seed({ force = false } = {}) {
 
   const userCount = db.prepare('SELECT COUNT(*) AS c FROM users').get().c;
   if (userCount > 0 && !force) {
+    // The product catalog shipped after the initial release, so databases
+    // seeded before it exist without demo products. Backfill independently.
+    seedProducts();
     return { seeded: false };
   }
 
   if (force) {
-    for (const t of ['invoice_items', 'invoices', 'activities', 'notes', 'tasks', 'deals', 'stages', 'pipelines', 'contacts', 'companies', 'users']) {
+    for (const t of ['invoice_items', 'invoices', 'products', 'activities', 'notes', 'tasks', 'deals', 'stages', 'pipelines', 'contacts', 'companies', 'users']) {
       db.prepare(`DELETE FROM ${t}`).run();
     }
   }
@@ -154,7 +157,33 @@ export function seed({ force = false } = {}) {
   });
 
   tx();
+  seedProducts();
   return { seeded: true };
+}
+
+/** Seed the demo product catalog. Idempotent: only inserts when the table is empty. */
+function seedProducts() {
+  const count = db.prepare('SELECT COUNT(*) AS c FROM products').get().c;
+  if (count > 0) return;
+
+  const products = [
+    ['Platform License — Starter', 'LIC-STARTER', 'Annual license for up to 10 users.', 'Licenses', 3600, 1],
+    ['Platform License — Business', 'LIC-BUSINESS', 'Annual license for up to 50 users.', 'Licenses', 12000, 1],
+    ['Platform License — Enterprise', 'LIC-ENT', 'Annual license, unlimited users with SSO.', 'Licenses', 36000, 1],
+    ['Additional Seat', 'SEAT-ADD', 'Single extra user seat, billed annually.', 'Licenses', 120, 1],
+    ['Onboarding & Training', 'SVC-ONBOARD', 'Guided onboarding with two training workshops.', 'Services', 6000, 1],
+    ['Custom Integration (per day)', 'SVC-INTEG', 'Engineering day for custom API integrations.', 'Services', 1200, 1],
+    ['Premium Support', 'SUP-PREMIUM', '24/7 support with a 1-hour response SLA.', 'Support', 4000, 1],
+    ['Standard Support', 'SUP-STANDARD', 'Business-hours support, next-day response.', 'Support', 1500, 1],
+    ['Data Migration Package', 'SVC-MIGRATE', 'Full import of legacy CRM data.', 'Services', 2500, 1],
+    ['Legacy API Add-on', 'ADD-LEGACY', 'Compatibility layer for the v1 API. No longer sold.', 'Add-ons', 800, 0],
+  ];
+  const tx = db.transaction(() => {
+    for (const p of products) {
+      db.prepare('INSERT INTO products (name, sku, description, category, price, active) VALUES (?, ?, ?, ?, ?, ?)').run(...p);
+    }
+  });
+  tx();
 }
 
 // Allow running directly: `node src/db/seed.js`

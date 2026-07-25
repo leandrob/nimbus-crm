@@ -120,6 +120,19 @@ CREATE TABLE IF NOT EXISTS invoices (
   updated_at TEXT NOT NULL DEFAULT (datetime('now'))
 );
 
+-- Product catalog: items that can be sold, with a unit price.
+CREATE TABLE IF NOT EXISTS products (
+  id          INTEGER PRIMARY KEY AUTOINCREMENT,
+  name        TEXT NOT NULL,
+  sku         TEXT,
+  description TEXT,
+  category    TEXT,
+  price       REAL NOT NULL DEFAULT 0,
+  active      INTEGER NOT NULL DEFAULT 1,
+  created_at  TEXT NOT NULL DEFAULT (datetime('now')),
+  updated_at  TEXT NOT NULL DEFAULT (datetime('now'))
+);
+
 CREATE TABLE IF NOT EXISTS invoice_items (
   id          INTEGER PRIMARY KEY AUTOINCREMENT,
   invoice_id  INTEGER NOT NULL REFERENCES invoices(id) ON DELETE CASCADE,
@@ -141,3 +154,4 @@ CREATE INDEX IF NOT EXISTS idx_activities_created ON activities(created_at);
 CREATE INDEX IF NOT EXISTS idx_invoices_status  ON invoices(status);
 CREATE INDEX IF NOT EXISTS idx_invoices_company ON invoices(company_id);
 CREATE INDEX IF NOT EXISTS idx_invoice_items_invoice ON invoice_items(invoice_id);
+CREATE INDEX IF NOT EXISTS idx_products_active ON products(active);

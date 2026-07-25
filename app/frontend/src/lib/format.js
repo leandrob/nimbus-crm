@@ -11,6 +11,16 @@ export function formatCurrency(value) {
   }).format(n);
 }
 
+/** Format a price as USD with cents, e.g. "$1,200.00". */
+export function formatPrice(value) {
+  const n = Number(value) || 0;
+  return new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
+    minimumFractionDigits: 2,
+  }).format(n);
+}
+
 function toDate(value) {
   if (!value) return null;
   // SQLite returns "YYYY-MM-DD HH:MM:SS"; normalize to ISO for parsing.
