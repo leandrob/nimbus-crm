@@ -19,7 +19,7 @@ cd app
 docker compose up
 ```
 
-Then open **http://localhost:5173**.
+Then open **http://localhost:5190**.
 
 Log in with the seeded admin account:
 
@@ -88,7 +88,7 @@ npm install
 npm start
 ```
 
-**Terminal 2 — frontend (Vite dev server on :5173):**
+**Terminal 2 — frontend (Vite dev server on :5190):**
 
 ```bash
 cd app/frontend
@@ -96,7 +96,7 @@ npm install
 npm run dev
 ```
 
-Open **http://localhost:5173**. The Vite dev server proxies `/api` and `/ws`
+Open **http://localhost:5190**. The Vite dev server proxies `/api` and `/ws`
 to the backend, so everything just works. The SQLite database and seed data are
 created automatically the first time the backend starts.
 

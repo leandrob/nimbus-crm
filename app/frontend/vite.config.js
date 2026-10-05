@@ -14,7 +14,7 @@ export default defineConfig({
   },
   server: {
     host: true,
-    port: 5173,
+    port: 5190,
     // Polling is needed to detect file changes on mounted volumes (Docker on
     // macOS/Windows). Harmless to leave off for native host dev.
     watch: { usePolling: process.env.VITE_USE_POLLING === 'true' },

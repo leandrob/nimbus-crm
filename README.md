@@ -9,7 +9,7 @@ The full project lives in [`app/`](./app). To get started, one command:
 ```bash
 cd app
 docker compose up
-# open http://localhost:5173  (login: admin@crm.test / admin123)
+# open http://localhost:5190  (login: admin@crm.test / admin123)
 ```
 
 This runs in development mode with live reload. For the production build, see

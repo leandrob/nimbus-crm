@@ -1,7 +1,7 @@
 # Default stack: development with live reload.
 #
 #   docker compose up
-#   open http://localhost:5173
+#   open http://localhost:5190
 #
 # Source is mounted into the containers, so:
 #   - editing any frontend file hot-reloads the browser instantly (Vite HMR)
@@ -44,7 +44,7 @@ services:
       - ./frontend:/app/frontend
       - frontend-node-modules:/app/frontend/node_modules
     ports:
-      - "5173:5173"
+      - "5190:5190"
     depends_on:
       - backend
 
